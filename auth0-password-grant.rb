@@ -8,9 +8,10 @@ Cimpress = {
 class Auth0PasswordGrant < Formula
   desc "CLI Auth0 access tokens through the Resource Owner Password Grant"
   homepage "https://github.com/Igrom/auth0-password-grant"
-  url "https://github.com/Igrom/auth0-password-grant/archive/1.0.7.tar.gz"
-  version "1.0.7"
-  sha256 "abbbbb77c5bcf2bf38e6bca44530381b404b87953f1e1cbb2a61587fbf6230b9"
+  url "https://github.com/Igrom/auth0-password-grant/archive/1.0.8.tar.gz"
+  version "1.0.8"
+  sha256 "e29bfd85dcb749d1b595286a6177d80cffe7bc07f440b15768664afa2d70c8cc"
+
   def install
     system "mkdir", "bin"
 
