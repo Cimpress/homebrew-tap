@@ -1,24 +1,35 @@
+Cimpress = {
+  "AUTH_URL" => "cimpress.auth0.com",
+  "CLIENT_ID" => "ST0wwOc0RavK6P6hhAPZ9Oc2XFD2dGUF",
+  "REALM" => "CimpressADFS",
+  "AUDIENCE" => "https://api.cimpress.io/"
+}
+
 class Auth0PasswordGrant < Formula
   desc "CLI Auth0 access tokens through the Resource Owner Password Grant"
   homepage "https://github.com/Igrom/auth0-password-grant"
-  url "https://github.com/Igrom/auth0-password-grant/archive/1.0.6.tar.gz"
-  version "1.0.6"
-  sha256 "feefa494505220fcae2ed9e1a905a704ec56baacb63d077257cbf1fbfe5e0785"
-   def install
-     system "make", "CONFIG_PATH=#{etc}/auth0-password-grant"
-     bin.install "bin/auth0-password-grant"
+  url "https://github.com/Igrom/auth0-password-grant/archive/1.0.7.tar.gz"
+  version "1.0.7"
+  sha256 "abbbbb77c5bcf2bf38e6bca44530381b404b87953f1e1cbb2a61587fbf6230b9"
+  def install
+    system "mkdir", "bin"
 
-     system "mkdir", "-p", "conf/auth0-password-grant"
-     system "cp", "config", "conf/auth0-password-grant"
-     system "sed", "-i", 's/AUTH_URL=.*/AUTH_URL="cimpress.auth0.com"/', "conf/auth0-password-grant/config"
-     system "sed", "-i", 's/CLIENT_ID=.*/CLIENT_ID="ST0wwOc0RavK6P6hhAPZ9Oc2XFD2dGUF"/', "conf/auth0-password-grant/config"
-     system "sed", "-i", 's/REALM=.*/REALM="CimpressADFS"/', "conf/auth0-password-grant/config"
-     system "sed", "-i", 's#AUDIENCE=.*#AUDIENCE="https://api.cimpress.io/"#', "conf/auth0-password-grant/config"
-     etc.install "conf/auth0-password-grant"
+    main = File.read "auth0-password-grant"
+    main.sub! /CONFIG_PATH=[^\n]*\n/, "CONFIG_PATH=#{etc}/auth0-password-grant"
+    File.write "bin/auth0-password-grant", main
 
-     man.install "doc/man1", "doc/man5"
+    bin.install "bin/auth0-password-grant"
+
+    system "mkdir", "-p", "conf/auth0-password-grant"
+
+    config = File.read "config"
+    Cimpress.each { |k, v| config.gsub! /#{k}=[^\n]*\n/, "#{k}=#{v}\n" }
+    File.write "conf/auth0-password-grant/config", config
+
+    etc.install "conf/auth0-password-grant"
+    man.install "doc/man1", "doc/man5"
   end
-   test do
+  test do
     system "#{bin}/auth0-password-grant", "-v"
   end
 end
