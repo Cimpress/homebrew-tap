@@ -1,7 +1,7 @@
 Cimpress = {
   "AUTH_URL" => "cimpress.auth0.com",
   "CLIENT_ID" => "ST0wwOc0RavK6P6hhAPZ9Oc2XFD2dGUF",
-  "REALM" => "CimpressADFS",
+  "REALM" => "cimpresscom-native-waad",
   "AUDIENCE" => "https://api.cimpress.io/"
 }
 
